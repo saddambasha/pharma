@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Pharmaceutical Products Website">
+    <title>PharmaCare — Health & Wellness</title>
+    <style>
+        :root {
+            --green: #23d160;
+            --deep-green: #14b47b;
+            --bg: #f6fffa;
+            --white: #fff;
+            --radius: 18px;
+            --container: 1120px;
+            --gap: 1.6rem;
+            --font: 'Segoe UI', Inter, Arial, sans-serif;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; color: #232; background: var(--bg);
+            font-family: var(--font);
+            min-height: 100vh;
+        }
+        header {
+            background: var(--white);
+            border-radius: 0 0 var(--radius) var(--radius);
+            box-shadow: 0 2px 16px rgba(24,48,48,0.09);
+            position: sticky; top: 0; z-index: 30;
+            max-width: 100vw;
+        }
+        .container {
+            max-width: var(--container);
+            margin: 0 auto; padding: 0 2rem;
+        }
+        .navwrap {
+            display: flex; align-items: center; justify-content: space-between; padding: 1.3rem 0;
+        }
+        .logo {
+            width: 52px; height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--deep-green), var(--green));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 2rem; color: #fff;
+            margin-right: 1.3rem;
+        }
+        nav ul {
+            list-style: none; margin: 0; padding: 0;
+            display: flex; gap: 2rem; align-items: center;
+        }
+        nav a {
+            font-weight: 600; color: #223; text-decoration: none; font-size: 1.1rem;
+            padding: .5rem 1rem; border-radius: 8px;
+            transition: background .16s;
+        }
+        nav a.active, nav a:hover {
+            background: var(--bg); color: var(--deep-green);
+        }
+        .btn {
+            background: var(--green); color: #fff; padding: .8rem 1.6rem;
+            border: 0; border-radius: 2rem; font-weight: 700; cursor: pointer;
+            font-size: 1.05rem;
+            box-shadow: 0 3px 16px rgba(35,209,96,0.1);
+        }
+        .btn:hover { background: var(--deep-green); }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none; flex-direction: column; gap: 6px; cursor: pointer;
+            justify-content: center; align-items: center;
+            width: 36px; height: 36px; padding: 6px;
+            margin-left: 1rem;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px; height: 3px; background: var(--deep-green); border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        /* Hero */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--white);
+            border-radius: var(--radius);
+            margin: 2rem auto 1.5rem;
+            padding: 2.5rem 2rem 1.8rem;
+            box-shadow: 0 2px 26px rgba(24,77,64,0.09);
+            text-align: center;
+            max-width: 1000px;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--deep-green);
+            margin-bottom: 0.5rem;
+        }
+        .hero p {
+            color: #408b6a; font-size: 1.17rem; margin-bottom: 1.4rem;
+        }
+
+        /* Products grid */
+        .product-section {
+            margin: 0 auto;
+            max-width: var(--container);
+            padding: 1.6rem 2rem 2.3rem 2rem;
+        }
+        .product-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--gap);
+        }
+        .card {
+            background: #fff; border-radius: var(--radius);
+            box-shadow: 0 6px 24px rgba(35,175,112,0.13);
+            padding: 2.2rem 1.3rem 1.3rem; display: flex; flex-direction: column; align-items: center;
+            position: relative;
+        }
+        .card img {
+            width: 120px; height: 120px; object-fit: contain; border-radius: 10px; background: #efffe7;
+            margin-bottom: 1.2rem; box-shadow: 0 1.5px 8px #e7fbe5;
+        }
+        .card h2 {
+            margin: 0 0 .3rem; font-size: 1.33rem; color: var(--deep-green);
+        }
+        .card p {
+            margin: 0 0 .8rem; color: #3a5; font-size: .96rem; min-height: 3ch;
+        }
+        .card .btn {
+            margin-top: .7rem; background: var(--green); color: #fff; font-size: 1rem; border-radius: 1.1rem;
+        }
+        /* Responsive */
+        @media (max-width:900px) {
+            .container, .product-section { padding: 0 1rem; }
+        }
+        @media (max-width:700px) {
+            .hero { padding: 1.2rem 0.5rem; }
+            .product-grid { grid-template-columns: 1fr; }
+            nav ul { display: none; flex-direction: column; background: #fff; border-radius: 0 0 16px 16px; box-shadow: 0 10px 30px rgba(16,96,32,0.10); position: absolute; top: 62px; right: 0; min-width: 160px; }
+            nav ul.show { display: flex; }
+            .hamburger { display: flex; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container navwrap">
+        <div style="display: flex; align-items: center;">
+            <div class="logo">🌿</div>
+            <span style="font-size:1.25rem;font-weight:600;">PharmaCare</span>
+        </div>
+        <nav>
+            <div class="hamburger" id="hamburgerMenu" aria-label="Toggle menu" tabindex="0">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="mainNav">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- <button class="btn" onclick="window.location='#contact'">Contact</button> -->
+    </div>
+</header>
+<main>
+    <!-- Hero section -->
+<section id="home" class="hero">
+        <h1>Your Trusted Pharmaceutical Partner</h1>
+        <p>Easily customize our inventory and information—supporting wellness, health, and care for everyone.</p>
+        <p style="max-width:720px; margin:0.6rem auto 1rem; color:#3a5;">
+                Browse curated formulations, patient-friendly guides, and verified supplier details. Our catalog is kept up-to-date so you can find reliable options for everyday wellness and specialist needs.
+        </p>
+
+        <ul style="list-style:none; display:flex; gap:1rem; justify-content:center; padding:0; margin:0 0 1rem;">
+                <li>✅ Quality-controlled products</li>
+                <li>🚚 Fast, trackable shipping</li>
+                <li>🔒 Secure ordering & privacy</li>
+        </ul>
+
+        <p style="font-size:.95rem; color:#557; margin:0 0 1rem;">
+                All products comply with applicable regulatory standards — check each product page for ingredients, dosage, and safety information.
+        </p>
+
+        <div style="display:flex; gap:1rem; justify-content:center; align-items:center; margin-bottom:1rem;">
+                <button class="btn" onclick="document.querySelector('a[href=\'#products\']').click()">View Products</button>
+        </div>
+
+        <!-- CEO profile container (now visible by default; supports multiple profiles loaded dynamically from Google Sheets and displayed as individual cards in a responsive grid) -->
+        <div id="ceoProfile" style="display:block; width:100%; margin-top:1rem; max-width:820px;"></div>
+
+        <script>
+                // Fetch CEO details (images + description + experience blocks) from Google Sheets
+                function getCEOFromSheet() {
+                        // If google is not ready, schedule callback
+                        if (!window.google || !google.visualization || !google.visualization.Query) {
+                                google.charts.setOnLoadCallback(getCEOFromSheet);
+                                return;
+                        }
+
+                        const sheetId = '1JjbuClEUrWgnwzadcQL4u8DPcEP1v93qBmuuxihE1ME'; // replace if needed
+                        const sheetName = 'ceo_info'; // expected sheet tab: columns => A:Name, B:Title, C:ImageURL, D:Description/Experience
+                        const query = encodeURIComponent('SELECT A,B,C,D');
+                        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}&tq=${query}`;
+                        const q = new google.visualization.Query(url);
+                        q.send(handleCEOQuery);
+                }
+
+                function handleCEOQuery(response) {
+                        if (response.isError()) {
+                                console.error('Error fetching CEO data:', response.getMessage());
+                                return;
+                        }
+                        const data = response.getDataTable();
+                        if (!data || data.getNumberOfRows() === 0) return;
+
+                        const container = document.getElementById('ceoProfile');
+                        container.innerHTML = '';
+                        // layout as responsive grid of profile cards
+                        container.style.display = 'grid';
+                        container.style.gridTemplateColumns = 'repeat(auto-fit,minmax(320px,1fr))';
+                        container.style.gap = '1rem';
+
+                        for (let r = 1; r < data.getNumberOfRows(); r++) {
+                                const name = data.getValue(r, 0) || 'CEO';
+                                const title = data.getValue(r, 1) || 'Chief Executive Officer';
+                                const imageUrl = data.getValue(r, 2) || '';
+                                const raw = data.getValue(r, 3) || '';
+
+                                const parts = raw.split('||').map(s => s.trim()).filter(Boolean);
+                                const bio = parts[0] || '';
+                                const experiences = (parts[1] || '').split(';').map(s => s.trim()).filter(Boolean);
+
+                                const card = document.createElement('div');
+                                card.className = 'card';
+                                card.style.flexDirection = 'row';
+                                card.style.alignItems = 'flex-start';
+                                card.style.gap = '1rem';
+                                card.style.padding = '1.2rem';
+                                card.style.maxWidth = '100%';
+                                card.style.minHeight = '140px';
+                                card.style.display = 'flex';
+
+                                const img = document.createElement('img');
+                                img.src = imageUrl || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140"><rect width="100%" height="100%" fill="%23efffe7"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%233a5" font-size="14">No Image</text></svg>';
+                                img.alt = name;
+                                img.style.width = '140px';
+                                img.style.height = '140px';
+                                img.style.objectFit = 'cover';
+                                img.style.borderRadius = '12px';
+                                img.style.boxShadow = '0 1.5px 8px #e7fbe5';
+
+                                const meta = document.createElement('div');
+                                meta.style.textAlign = 'left';
+                                meta.style.flex = '1';
+
+                                const h2 = document.createElement('h2');
+                                h2.textContent = name;
+                                h2.style.margin = '0 0 .25rem';
+                                h2.style.color = 'var(--deep-green)';
+
+                                const pTitle = document.createElement('p');
+                                pTitle.textContent = title;
+                                pTitle.style.margin = '0 0 .6rem';
+                                pTitle.style.fontWeight = '700';
+                                pTitle.style.color = '#2b6';
+
+                                const pBio = document.createElement('p');
+                                pBio.textContent = bio;
+                                pBio.style.margin = '0 0 .6rem';
+                                pBio.style.color = '#3a5';
+
+                                meta.appendChild(h2);
+                                meta.appendChild(pTitle);
+                                if (bio) meta.appendChild(pBio);
+
+                                if (experiences.length) {
+                                        const expWrap = document.createElement('div');
+                                        expWrap.style.display = 'grid';
+                                        expWrap.style.gridTemplateColumns = 'repeat(auto-fit,minmax(160px,1fr))';
+                                        expWrap.style.gap = '.6rem';
+                                        expWrap.style.marginTop = '.4rem';
+
+                                        experiences.forEach(exp => {
+                                                const block = document.createElement('div');
+                                                block.style.background = 'var(--bg)';
+                                                block.style.padding = '.7rem';
+                                                block.style.borderRadius = '10px';
+                                                block.style.boxShadow = '0 1px 8px rgba(24,77,64,0.04)';
+                                                block.style.color = '#375';
+                                                block.style.fontSize = '.95rem';
+                                                block.textContent = exp;
+                                                expWrap.appendChild(block);
+                                        });
+                                        meta.appendChild(expWrap);
+                                }
+
+                                card.appendChild(img);
+                                card.appendChild(meta);
+                                container.appendChild(card);
+                        }
+                }
+        </script>
+</section>
+
+    <!-- Product grid -->
+    <section id="products" class="product-section">
+        <h2 style="color:var(--deep-green); text-align:center; margin-bottom:1.4rem;">Featured Pharmaceutical Products</h2>
+        <div class="product-grid" id="productContainer">
+            <!-- Dynamic product cards will be inserted here only when user clicks Products -->
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" style="background:var(--white); padding:3rem 1.6rem; border-radius:var(--radius); box-shadow:0 3px 20px rgba(20,100,60,0.08); max-width:1000px; margin:2.5rem auto;">
+        <h2 style="text-align:center; color:var(--deep-green); font-size:2rem; margin-bottom:1.2rem;">About PharmaCare</h2>
+        <p style="text-align:center; color:#446; font-size:1.1rem; max-width:760px; margin:0 auto 2rem;">
+            Founded in <strong>2015</strong>, PharmaCare has been dedicated to providing reliable, high-quality pharmaceutical and wellness products to improve lives every day. 
+            We partner with trusted manufacturers and healthcare professionals to ensure every product meets the highest safety and efficacy standards.
+        </p>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.6rem; align-items:start; max-width:900px; margin:0 auto;">
+            <div style="background:var(--bg); border-radius:14px; padding:1.5rem; box-shadow:0 2px 10px rgba(24,77,64,0.06);">
+                <h3 style="color:var(--deep-green); margin-top:0;">Our Mission 🌿</h3>
+                <p style="color:#375; line-height:1.6;">
+                    To promote health, wellness, and accessible medicine through innovation, integrity, and care — 
+                    empowering individuals to live healthier, happier lives.
+                </p>
+            </div>
+            <div style="background:var(--bg); border-radius:14px; padding:1.5rem; box-shadow:0 2px 10px rgba(24,77,64,0.06);">
+                <h3 style="color:var(--deep-green); margin-top:0;">Our Vision 💡</h3>
+                <p style="color:#375; line-height:1.6;">
+                    To be a global name in pharmaceutical excellence, combining science and compassion to shape the future of healthcare.
+                </p>
+            </div>
+            <div style="background:var(--bg); border-radius:14px; padding:1.5rem; box-shadow:0 2px 10px rgba(24,77,64,0.06);">
+                <h3 style="color:var(--deep-green); margin-top:0;">Our Values 💚</h3>
+                <ul style="color:#375; padding-left:1.2rem; line-height:1.6; margin:0;">
+                    <li>Commitment to Quality</li>
+                    <li>Customer-Centric Service</li>
+                    <li>Innovation with Purpose</li>
+                    <li>Integrity & Transparency</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section (placeholder for now) -->
+    <section id="contact" style="text-align:center; padding:3rem 1.6rem; max-width:900px; margin:2rem auto;">
+        <h2 style="color:var(--deep-green); margin-bottom:1rem;">Contact Us</h2>
+        <p style="color:#465; font-size:1.1rem; max-width:600px; margin:0 auto 1.5rem;">
+            Have questions or partnership inquiries? Reach out to us anytime.
+        </p>
+        <a href="mailto:info@pharmacare.com" class="btn">📧 info@pharmacare.com</a>
+    </section>
+</main>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    // Toggle hamburger menu
+    const hamburger = document.getElementById('hamburgerMenu');
+    const nav = document.getElementById('mainNav');
+    hamburger.onclick = () => { nav.classList.toggle('show'); };
+    hamburger.onkeydown = e => { if(e.key === 'Enter' || e.key === ' ') nav.classList.toggle('show'); };
+    document.body.onclick = e => {
+        if(window.innerWidth < 701){
+            if(!nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('show');
+        }
+    };
+
+    // Fetch products from Google Sheets (only when user requests)
+    function getProductsFromSheet() {
+        if (!window.google || !google.visualization || !google.visualization.Query) {
+            google.charts.setOnLoadCallback(getProductsFromSheet);
+            return;
+        }
+
+        const sheetId = '1JjbuClEUrWgnwzadcQL4u8DPcEP1v93qBmuuxihE1ME'; // Replace with your own sheet ID
+        const sheetName = 'product_info'; // Name of your sheet tab
+        const query = encodeURIComponent('SELECT A,B,C,D,E');
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}&tq=${query}`;
+        
+        const queryObj = new google.visualization.Query(url);
+        queryObj.send(handleQuery);
+    }
+
+    function handleQuery(response) {
+        if (response.isError()) {
+            console.error('Error fetching data:', response.getMessage());
+            return;
+        }
+        const data = response.getDataTable();
+        const container = document.getElementById('productContainer');
+        container.innerHTML = '';
+
+        for (let i = 0; i < data.getNumberOfRows(); i++) {
+            const name = data.getValue(i, 0) || 'Product';
+            const description = data.getValue(i, 1) || '';
+            const imageUrl = data.getValue(i, 2) || '';
+            const price = data.getValue(i, 3) || '';
+            const link = data.getValue(i, 4) || '#';
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <img src="${imageUrl}" alt="${name}">
+                <h2>${name}</h2>
+                <p>${description}</p>
+                <p style="font-weight:bold;color: var(--deep-green);">₹${price}</p>
+                <button class="btn" onclick="window.open('${link}', '_blank')">Learn More</button>
+            `;
+            container.appendChild(card);
+        }
+    }
+
+    // Wire Products nav link to lazy-load the sheet and show section
+    document.querySelectorAll('a[href="#products"]').forEach(a => {
+        a.addEventListener('click', function (e) {
+            e.preventDefault();
+            // visually mark active
+            document.querySelectorAll('#mainNav a').forEach(x => x.classList.remove('active'));
+            this.classList.add('active');
+
+            getProductsFromSheet();
+            document.getElementById('products').scrollIntoView({behavior:'smooth'});
+            nav.classList.remove('show');
+            history.pushState(null, '', '#products');
+        });
+    });
+
+    // Load Google Charts and fetch CEO profiles on ready
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(function () {
+        getCEOFromSheet();
+        // Do NOT auto-load products; they load on user click
+    });
+</script>
+</body>
+</html>
